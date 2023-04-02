@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Random Quote Generator</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom, #a0d2eb, #e5eaf5, #d0bdf4, #8458b3);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+      }
+
+      h1 {
+        text-align: center;
+        color: #060606;
+      }
+      button {
+        background-color: red;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 20px;
+        display: block;
+        margin: 0 auto;
+      }
+      button:hover {
+        background-color: #dc4f0e;
+      }
+      p#quote {
+        font-size: 30px;
+        font-style: italic;
+        text-align: center;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Quote Generator</h1>
+    <button onclick="generateQuote()">Generate</button>
+    <p id="quote"></p>
+    <script>
+      function generateQuote() {
+        fetch("https://type.fit/api/quotes")
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            var index = Math.floor(Math.random() * data.length);
+            var quote = data[index].text;
+            var author = data[index].author || "Unknown";
+            document.getElementById("quote").innerHTML = `"${quote}" - ${author}`;
+          });
+      }
+    </script>
+  </body>
+</html>
